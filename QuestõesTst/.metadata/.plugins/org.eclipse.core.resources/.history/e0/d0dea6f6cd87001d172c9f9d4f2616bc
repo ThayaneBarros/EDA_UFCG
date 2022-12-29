@@ -1,0 +1,50 @@
+package pilha;
+
+import java.util.Scanner;
+import java.util.Stack;
+
+public class TorreHanoi {
+
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		String[] num = sc.nextLine().split(" ");
+		int indice = sc.nextInt();
+		
+		int[] num2 = new int[num.length];
+		for(int i = 0; i < num2.length; i++) {
+			num2[i] = Integer.parseInt(num[i]);
+		}
+		
+		System.out.println(elementoPilha(num2, indice));
+		
+	}
+
+	private static String elementoPilha(int[] num2, int indice) {
+		String value = "indice invalido";
+		if(indice < num2.length && indice >= 0) {
+			Stack<Integer> pilha = new Stack<>();
+			Stack<Integer> pilhaAux = new Stack<>();
+			
+			for(int i = 0; i < num2.length; i++) {
+				pilha.push(num2[i]);
+			}
+			
+			for(int i = 0; i < num2.length - indice; i++) {
+				pilhaAux.push(pilha.pop());
+			}
+			
+			value = "";
+			value += pilhaAux.peek();
+			
+			while(!pilhaAux.isEmpty()) {
+				pilha.push(pilhaAux.pop());
+			}
+			
+		}
+		
+		return value;
+		
+	}
+
+	
+}

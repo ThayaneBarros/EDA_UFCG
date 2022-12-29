@@ -1,0 +1,44 @@
+package pilha;
+
+import java.util.Scanner;
+import java.util.Stack;
+
+public class MaxPilhaIndex {
+
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		String[] num = sc.nextLine().split(" ");
+		int indice = sc.nextInt();
+		
+		Stack<Integer> pilha = new Stack();
+		Stack<Integer> pilhaAux = new Stack();
+ 		
+		for(int i = 0; i < num.length; i++) {
+			pilha.push(Integer.parseInt(num[i]));
+		}
+		
+		int valor, maior = 0;
+		if(num.length > 0) {
+			valor = pilha.pop();
+			pilhaAux.push(valor);
+			maior = valor;
+		}
+		
+		for(int i = 1; i <= indice; i++) {
+			valor = pilha.pop();
+			pilhaAux.push(valor);
+			
+			if(valor > maior) {
+				maior = valor;
+			}
+		}
+		
+		for(int i = 0; i <= indice; i++) {
+			pilha.push(pilhaAux.pop());
+		}
+		
+		System.out.println(maior);
+
+	}
+
+}

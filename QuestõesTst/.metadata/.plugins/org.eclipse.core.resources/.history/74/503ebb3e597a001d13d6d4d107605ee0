@@ -1,0 +1,100 @@
+package bst;
+
+import java.util.Deque;
+import java.util.LinkedList;
+import java.util.Scanner;
+
+import bst.Bfs_direita.BST;
+import bst.Bfs_direita.Node;
+
+public class SomaFolhas {
+
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		String[] num = sc.nextLine().split(" ");
+		
+		int[] num2 = new int[num.length];
+		for(int i = 0; i < num.length; i++) {
+			num2[i] = Integer.parseInt(num[i]);
+		}
+		
+		BST arr = new BST();
+		for(int i = 0; i < num2.length; i++) {
+			arr.add(num2[i]);
+		}
+		
+		System.out.println(arr.somaFolhas());
+
+	}
+	
+public static class Node {
+		
+		protected int value;
+		protected Node left;
+		protected Node right;
+		protected Node parent;
+		
+		public Node(int value) {
+			this.value = value;
+		}
+
+		public boolean isLeaf() {
+			return left == null && right == null;
+		}
+		
+	}
+	
+	public static class BST {
+		
+		protected Node root;
+		
+		public boolean isEmpty() {
+			return this.root == null;
+		}
+
+
+		public int somaFolhas() {
+			return somaFolhas(this.root);
+		}
+
+		private int somaFolhas(Node current) {
+			if(current == null) return 0;
+			if(current.isLeaf())return current.value;
+			else {
+				return somaFolhas(current.left) + somaFolhas(current.right);
+			}
+			
+		}
+		public void add(int element) {
+			if(this.isEmpty()) {
+				this.root = new Node(element);
+			} else {
+				Node aux = this.root;
+				while(aux != null) {
+					if(element < aux.value) {
+						if(aux.left == null) {
+							Node newNode = new Node(element);
+							aux.left = newNode;
+							newNode.parent = aux;
+							return;
+						}
+						aux = aux.left;
+					} else {
+						if(aux.right == null) {
+							Node newNode = new Node(element);
+							aux.right = newNode;
+							newNode.parent = aux;
+							return;
+						}
+						aux = aux.right;
+					}
+				}
+			}
+			
+		}
+		
+	}
+
+}
+
+

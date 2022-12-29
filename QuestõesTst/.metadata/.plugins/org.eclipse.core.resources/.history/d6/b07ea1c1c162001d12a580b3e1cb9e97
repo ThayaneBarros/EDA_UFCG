@@ -1,0 +1,40 @@
+package pilha;
+
+import java.util.Scanner;
+import java.util.Stack;
+
+public class PilhaInvertida {
+
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		int capacidade = sc.nextInt();
+		
+		Stack<Integer> pilha = new Stack();
+		for(int i = 0; i < capacidade; i++) {
+			pilha.push(sc.nextInt());
+		}
+		
+		int indice = sc.nextInt();
+		
+		Stack<Integer> pilhaAux = new Stack();
+		for(int i = 0; i <= indice; i++) {
+			pilhaAux.push(pilha.pop());
+		}
+		
+		Stack<Integer> pilhaAux2 = new Stack();
+		for(int i = 0; i <= indice; i++) {
+			pilhaAux2.push(pilhaAux.pop());
+		}
+		
+		for(int i = 0; i <= indice; i++) {
+			pilha.push(pilhaAux2.pop());
+		}
+		
+		System.out.println("-");
+		for(int i = 0; i < capacidade; i++) {
+			System.out.println(pilha.pop());
+		}
+
+	}
+
+}

@@ -1,0 +1,152 @@
+package bst;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Scanner;
+
+import linkedList.Filtra.LinkedList;
+
+public class rotações {
+
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		String[] num = sc.nextLine().split(" ");
+		
+		int[] num2 = new int[num.length];
+		for(int i = 0; i < num.length; i++) {
+			num2[i] = Integer.parseInt(num[i]);
+		}
+		
+		BST arr = new BST();
+		for(int i = 0; i < num2.length; i++) {
+			arr.add(num2[i]);
+		}
+		
+		System.out.println(arr.rotacoes());
+
+	}
+	
+public static class Node {
+		
+		protected int value;
+		protected Node left;
+		protected Node right;
+		protected Node parent;
+		
+		public Node(int value) {
+			this.value = value;
+		}
+
+		public boolean isLeftPending() {
+			int left = this.left == null ? - 1 : this.left.height();
+			int right = this.right == null ? -1 : this.right.height();
+			return left - right >= 1;
+		}
+
+		private int height() {
+			if(this.left == null && this.right == null) {
+				return 0;
+			}
+			else if(this.left == null) {
+				return 1 + this.right.height();
+			}
+			else if(this.right == null) {
+				return 1 + this.left.height();
+			}
+			else {
+				return 1 + Math.max(this.left.height(), this.right.height());
+			}
+		}
+	}
+
+public static class BST {
+	
+	protected Node root;
+	
+	public boolean isEmpty() {
+		return this.root == null;
+	}
+
+	public String rotacoes() {
+		String out = "";
+		Node x = this.root;
+		
+		if(x.isLeftPending()) {
+			Node y = x.left;
+			
+			if(y.left != null) {
+				out += rotateRight(x);
+				out += Arrays.toString(preOrder(this.root, new ArrayList()));
+			}
+		}
+		
+		return out;
+		
+	}
+
+
+
+	private Object[] preOrder(Node node, ArrayList list) {
+		if(node != null) {
+			list.add(node.value);
+			preOrder(node.left, list);
+			preOrder(node.right, list);
+		}
+		
+		return list.toArray();
+	}
+
+	private String rotateRight(Node node) {
+		Node newNode = node.left;
+		newNode.parent = node.parent;
+		
+		node.left = newNode.right;
+		newNode.right = node;
+		
+		node.parent = newNode;
+		
+		if(newNode.parent != null) {
+			if(newNode.parent.left == node) {
+				newNode.parent.left = newNode;
+			} else {
+				newNode.parent.right = newNode;
+			}
+		} else {
+			this.root = newNode;
+		}
+		
+		return "rot_dir(" + node.value + ")";
+	}
+
+	public void add(int element) {
+		if(this.isEmpty()) {
+			this.root = new Node(element);
+		} else {
+			Node aux = this.root;
+			while(aux != null) {
+				if(element < aux.value) {
+					if(aux.left == null) {
+						Node newNode = new Node(element);
+						aux.left = newNode;
+						newNode.parent = aux;
+						return;
+					}
+					aux = aux.left;
+				} else {
+					if(aux.right == null) {
+						Node newNode = new Node(element);
+						aux.right = newNode;
+						newNode.parent = aux;
+						return;
+					}
+					aux = aux.right;
+				}
+			}
+		}
+		
+	}
+	
+}
+
+
+}

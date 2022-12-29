@@ -1,0 +1,10 @@
+package bst;
+
+public class Bfs_direita {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

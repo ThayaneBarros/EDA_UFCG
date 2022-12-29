@@ -1,0 +1,10 @@
+package pilha;
+
+public class ExpressaoMatematica {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}
